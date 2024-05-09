@@ -2,10 +2,14 @@ import pygame
 from pygame.math import Vector2
 from pygame.locals import *
 from utils import load_img
+from collections import deque
 
 class Snake():
     def __init__(self) -> None:
-        self.body = [Vector2(6, 4), Vector2(5, 4), Vector2(4, 4)]
+        self.body = deque()
+        self.body.append(Vector2(6, 4))
+        self.body.append(Vector2(5, 4))
+        self.body.append(Vector2(4, 4))
         self.dir = Vector2(1, 0)
         self.length = 3
 
@@ -21,8 +25,24 @@ class Snake():
         self.body_img = load_img(fr"{assets_path}\snake_body_seg.png")
 
     def move(self) -> None:
-        for x in range(self.length):
-            self.body[x] += self.dir
+        self.body.pop()
+        candiate = self.dir + self.body[0]
+        if candiate.x == 16:
+            self.body.appendleft(Vector2(0, candiate.y))
+        elif candiate.x == -1:
+            self.body.appendleft(Vector2(15, candiate.y))  
+            return None
+        elif candiate.y == -1:
+            self.body.append(Vector2(candiate.x, 15))
+        elif candiate.y == 16:
+            self.body.append(Vector2(candiate.x, 0))
+        else:
+            self.body.appendleft(self.dir + self.body[0])
+
+    def add_new(self) -> None:
+        self.length += 1
+        self.body.appendleft(self.dir + self.body[0])
+        
     
     def draw(self, screen:pygame.Surface) -> None:
         TILE_SIZE = 50
