@@ -10,18 +10,31 @@ class Snake():
         self.length = 3
 
         assets_path = r"..\assets"
-        self.head_img = load_img(fr"{assets_path}\snake_head.png")
-        self.body_img = load_img(fr"{assets_path}\snake_body.png")
-        self.twist_img = load_img(fr"{assets_path}\snake_twist.png")
-        self.tail_img = load_img(fr"{assets_path}\snake_tail.png")
+
+        base_img = load_img(fr"{assets_path}\snake_head.png")
+        self.head_imgs = list()
+        self.head_imgs.append(base_img) #UP
+        self.head_imgs.append(pygame.transform.rotate(base_img, 90)) #Left
+        self.head_imgs.append(pygame.transform.rotate(base_img, 180)) #Down
+        self.head_imgs.append(pygame.transform.rotate(base_img, 270)) #Right
+
+        self.body_img = load_img(fr"{assets_path}\snake_body_seg.png")
+
+    def move(self) -> None:
+        for x in range(self.length):
+            self.body[x] += self.dir
     
-    def draw_snake(self, screen:pygame.Surface):
+    def draw(self, screen:pygame.Surface) -> None:
         TILE_SIZE = 50
         for index, body in enumerate(self.body):
             base_rect = pygame.Rect(body.x * TILE_SIZE, body.y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
             if index == 0:
-                screen.blit(self.head_img, base_rect)
-            elif index ==self.length - 1:
-                screen.blit(self.tail_img, base_rect)
+                screen.blit(self.generate_end_img(self.dir), base_rect)
             else:
                 screen.blit(self.body_img, base_rect)
+
+    def generate_end_img(self, dir: Vector2) -> pygame.Surface:
+        if (dir == Vector2(1, 0)): return self.head_imgs[3] #Right
+        if (dir == Vector2(-1, 0)): return self.head_imgs[1] #Left
+        if (dir == Vector2(0, 1)): return self.head_imgs[0] #Up
+        return self.head_imgs[2]
