@@ -1,5 +1,6 @@
 # Snake Game
-Simple snake game made with pygame.
+Simple snake game made with pygame. </br>
+The core game is finished
 
 # Imporvements
 - [ ] Use the snake images with outlines and add the logic to implement it
