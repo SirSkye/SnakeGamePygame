@@ -6,6 +6,7 @@ The core game is finished
 - [ ] Use the snake images with outlines and add the logic to implement it
 - [ ] Add scores and menu
 - [ ] Add sounds
+- [ ] Make the random apple placment generator more efficient
 
 # Things I learned
 * Snake movement can be implemented with deque
