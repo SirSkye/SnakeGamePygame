@@ -82,8 +82,8 @@ class Game():
         return False
     
     def check_fail(self) -> bool:
-        for body in self.snake.body[1:]:
-            if body == self.snake.body[0]:
+        for x in range(1, self.snake.length):
+            if self.snake.body[x] == self.snake.body[0]:
                 print("failed")
                 pygame.quit()
                 sys.exit()
