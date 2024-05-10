@@ -22,6 +22,7 @@ class Game():
         self.FPS = FPS
         self.snake = Snake()
         self.apple = Apple(self.snake.body)
+        self.check_keypress = False
 
         assets_path = r"../assets"
         self.grass_light = load_img(fr"{assets_path}/grass_light.png")
@@ -33,22 +34,27 @@ class Game():
             for event in pygame.event.get():
                 if event.type == self.UPDT_SCREEN:
                     self.update()
+                    self.check_keypress = True
                 elif event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-                elif event.type == KEYDOWN:
+                elif event.type == KEYDOWN and self.check_keypress == True:
                     if event.key == K_UP:
                         if self.snake.dir != Vector2(0, 1):
                             self.snake.dir = Vector2(0, -1)
+                            self.check_keypress = False
                     elif event.key == K_DOWN:
                         if self.snake.dir != Vector2(0, -1):
                             self.snake.dir = Vector2(0, 1)
+                            self.check_keypress = False
                     elif event.key == K_LEFT:
                         if self.snake.dir != Vector2(1, 0):
                             self.snake.dir = Vector2(-1, 0)
+                            self.check_keypress = False
                     elif event.key == K_RIGHT:
                         if self.snake.dir != Vector2(-1, 0):
                             self.snake.dir = Vector2(1, 0)
+                            self.check_keypress = False
 
             self.draw_grass()
             self.apple.draw(self.screen)

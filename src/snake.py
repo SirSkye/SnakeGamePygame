@@ -33,9 +33,9 @@ class Snake():
             self.body.appendleft(Vector2(15, candiate.y))  
             return None
         elif candiate.y == -1:
-            self.body.append(Vector2(candiate.x, 15))
+            self.body.appendleft(Vector2(candiate.x, 15))
         elif candiate.y == 16:
-            self.body.append(Vector2(candiate.x, 0))
+            self.body.appendleft(Vector2(candiate.x, 0))
         else:
             self.body.appendleft(self.dir + self.body[0])
 
